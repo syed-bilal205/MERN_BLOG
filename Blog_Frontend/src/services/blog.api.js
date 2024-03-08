@@ -32,8 +32,11 @@ export const blogApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getAllTheBlogPosts: builder.query({
-      queryFn: ({ page, limit, sortBy, search }) => {
-        let url = `${BLOG_URL}/get-all-posts?page=${page}&limit=${limit}&sortBy=${sortBy}`;
+      query: ({ page = 1, limit = 10, sortBy, search }) => {
+        let url = `/get-all-posts?page=${page}&limit=${limit}`;
+        if (sortBy) {
+          url += `&sortBy=${sortBy}`;
+        }
         if (search) {
           url += `&search=${search}`;
         }
